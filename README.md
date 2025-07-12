@@ -20,7 +20,7 @@ b. virtual <env> <br>
 c. env\Scripts\activate <br>
 
 1. Clone repository:
-   git clone https://github.com/yourusername/graphic-card-finder.git
+   git clone https://github.com/Ankit-euphemism/Simple-GPU-Finder.git
    cd graphic-card-finder
 
 2. Install dependencies:
