@@ -13,6 +13,12 @@ The data is sourced from the static json website, specifically from the URL: \da
 - JSON API endpoint
 
 ## Setup Instructions
+
+Note: First of all create virtual enviorment and activate using:-<br>
+a. pip install virtualenv <br> 
+b. virtual <env> <br>
+c. env\Scripts\activate <br>
+
 1. Clone repository:
    git clone https://github.com/yourusername/graphic-card-finder.git
    cd graphic-card-finder
@@ -40,7 +46,11 @@ GET /search?q=search_term&max_price=15000: Search products
 
 ## Technologies Used
 
-flask, requests json , re, HTML, bootstrap CDN, CSS, JavaScript, jinja2
+Backend:- Flask(Python) <br>
+Frontend:- HTML5, CSS3, Bootstrap 5, JavaScript (ES6) <br>
+Data Handling: json <br>
+API:- request,jsonify <br>
+Fetching Data:- Async Operations-> Fetch API with async/await
 
 ## Sample Output
 
