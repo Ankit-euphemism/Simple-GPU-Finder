@@ -3,7 +3,7 @@
 Information tool for graphic cards under ₹20,000 with search and refresh capabilities.
 
 ## Data Source
-The data is sourced from the static json website, specifically from the URL: \data\scraping
+The data is sourced from the static json website, specifically from the URL: \data\scraping.json
 
 ## Features
 - Display 15 graphic cards with prices
