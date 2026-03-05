@@ -23,6 +23,12 @@ The data is sourced from the static json website, specifically from the URL: \da
 3. Run the application:
     python app.py
 
+   Production-style WSGI run (cross-platform):
+   waitress-serve --listen=0.0.0.0:5000 app:app
+
+   Note:
+   `gunicorn` is Unix/Linux oriented and fails on Windows because it depends on `fcntl`.
+
 4. Access the application:
     Access the web interface at: http://localhost:5000
 
