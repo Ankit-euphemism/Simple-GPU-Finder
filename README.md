@@ -1,53 +1,174 @@
-# GPU Finder - Top Graphic Cards under ₹20,000
+# VidFind — GPU Price Finder
 
-Information tool for graphic cards under ₹20,000 with search and refresh capabilities.
+> Find the best graphics cards under ₹20,000 with live search and smart pricing filters.
 
-## Data Source
-The data is sourced from the static json website, specifically from the URL: \data\scraping
+![App Screenshot](image/Screenshot%202025-07-12%20200120.png)
+
+---
+
+## Overview
+
+**VidFind** is a lightweight Flask web application that helps users discover and compare budget GPU listings sourced from multiple online retailers. It features a real-time keyword search, an interactive price-range slider, and a clean dark-mode UI — all served from a static JSON dataset.
+
+---
 
 ## Features
-- Display 15 graphic cards with prices
-- Real-time search/filter by keyword and price
-- One-click data refresh
-- Responsive design
-- JSON API endpoint
 
-## Setup Instructions
-1. Clone repository:
-   git clone https://github.com/yourusername/graphic-card-finder.git
-   cd graphic-card-finder
+- 🔍 **Live Search** — Filter GPU listings instantly by keyword (e.g. `RTX`, `RX 6600`, `12GB`)
+- 💰 **Price Slider** — Set a maximum budget (₹5,000–₹20,000) and results update in real time
+- 🔄 **Data Refresh** — One-click button to reload the product dataset via a POST endpoint
+- 🌙 **Dark Mode UI** — Sleek purple/cyan gradient theme with glassmorphism card design
+- 📦 **JSON API** — Expose product data programmatically via a REST endpoint
+- 📱 **Responsive** — Mobile-friendly layout using Bootstrap 5 grid
 
-2. Install dependencies:
-    pip install -r requirements.txt
+---
 
-3. Run the application:
-    python app.py
+## Project Structure
 
-   Production-style WSGI run (cross-platform):
-   waitress-serve --listen=0.0.0.0:5000 app:app
+```
+Simple-GPU-Finder/
+│
+├── app.py                  # Flask app — routes, data loading, price parsing
+├── scraper.py              # Data pipeline — reads scraping.json → graphic_cards.json
+├── run.py                  # Production entry point using Waitress WSGI server
+│
+├── data/
+│   ├── scraping.json       # Raw scraped GPU data (source dataset)
+│   └── graphic_cards.json  # Transformed dataset served by the app
+│
+├── templates/
+│   ├── base.html           # Base layout — navbar, footer, Bootstrap, JS imports
+│   └── index.html          # Main page — hero, filter panel, GPU card listings
+│
+├── static/
+│   ├── css/style.css       # Custom dark-mode styles, animations, card design
+│   └── js/app.js           # Client-side filtering, AJAX search, toast notifications
+│
+├── requirements.txt        # Python dependencies
+├── Procfile                # Deployment config (e.g. Heroku)
+└── README.md
+```
 
-   Note:
-   `gunicorn` is Unix/Linux oriented and fails on Windows because it depends on `fcntl`.
+---
 
-4. Access the application:
-    Access the web interface at: http://localhost:5000
+## Tech Stack
 
-5. Use search box and price slider to filter
+| Layer      | Technology                              |
+|------------|-----------------------------------------|
+| Backend    | Python 3, Flask, Jinja2                 |
+| Frontend   | HTML5, Vanilla CSS, JavaScript (ES6+)   |
+| UI Library | Bootstrap 5 (CDN)                       |
+| Typography | Google Fonts — Inter                    |
+| WSGI       | Waitress (production), Flask dev server |
+| Data       | JSON (static file-based dataset)        |
 
-6. Click "Refresh Data" to update information
+---
 
-## API Endpoint
+## API Endpoints
 
-GET /api/products: Get all products as JSON
+| Method | Endpoint                          | Description                              |
+|--------|-----------------------------------|------------------------------------------|
+| `GET`  | `/`                               | Renders the main page with all products  |
+| `GET`  | `/api/products`                   | Returns all products as JSON             |
+| `GET`  | `/search?q=<term>&max_price=<n>`  | Returns filtered products as JSON        |
+| `POST` | `/refresh`                        | Triggers a data refresh, returns count   |
 
-POST /refresh: Trigger data refresh
+**Example `/search` request:**
+```
+GET /search?q=rtx&max_price=15000
+```
 
-GET /search?q=search_term&max_price=15000: Search products
+**Example `/api/products` response:**
+```json
+[
+  {
+    "title": "ZOTAC Gaming GeForce RTX 3050 6GB",
+    "description": "NVIDIA powered GPU with 6GB GDDR6 memory...",
+    "price": 14999.0,
+    "source": "Amazon",
+    "link": "https://www.amazon.in/..."
+  }
+]
+```
 
-## Technologies Used
+---
 
-flask, requests json , re, HTML, bootstrap CDN, CSS, JavaScript, jinja2
+## Setup & Running
 
-## Sample Output
+### 1. Clone the repository
 
-![alt text](<image/Screenshot 2025-07-12 200120.png>)
+```bash
+git clone https://github.com/Ankit-euphemism/Simple-GPU-Finder.git
+cd Simple-GPU-Finder
+```
+
+### 2. Create and activate a virtual environment
+
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS / Linux
+python -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. (Optional) Regenerate the product dataset
+
+The app ships with a pre-built `data/graphic_cards.json`. To regenerate it from the raw source:
+
+```bash
+python scraper.py
+```
+
+### 5. Run the application
+
+**Development server (Flask):**
+```bash
+python app.py
+```
+
+**Production server (Waitress — cross-platform):**
+```bash
+python run.py
+```
+
+> ⚠️ `waitress` must be installed (`pip install waitress`). The classic `waitress-serve` CLI wrapper may fail on Windows due to a `fcntl` dependency, but `python run.py` works correctly on all platforms.
+
+### 6. Open in browser
+
+```
+http://localhost:5000
+```
+
+---
+
+## Data Pipeline
+
+```
+data/scraping.json
+      │
+      ▼
+  scraper.py          ← Reads raw data, transforms fields, filters by price
+      │
+      ▼
+data/graphic_cards.json
+      │
+      ▼
+    app.py            ← Loads JSON, exposes via Flask routes & Jinja2 templates
+```
+
+The `scraper.py` script reads `data/scraping.json`, filters GPUs under ₹20,000, generates descriptions, and writes the cleaned output to `data/graphic_cards.json`. The Flask app then serves this file on every request.
+
+---
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).

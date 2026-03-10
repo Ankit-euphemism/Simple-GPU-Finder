@@ -1,40 +1,83 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPU Finder - Top Cards under ₹20,000</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
-</head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm sticky-top">
-        <div class="container py-1">
-            <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="/" aria-label="GPU Finder Home">
-                <span class="rounded-circle bg-info-subtle text-dark px-2 py-1 small fw-bold">GF</span>
-                <span>GPU Finder</span>
-            </a>
-            <div class="d-flex">
-                <button id="refreshBtn" class="btn btn-sm btn-outline-light px-3" aria-label="Refresh product data">
-                    Refresh Data
-                </button>
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="GPU Finder — Find the best graphics cards under your budget with live search and pricing filters."
+    />
+    <title>VidFind — Best GPUs Under ₹20,000</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/css/style.css') }}"
+    />
+  </head>
+
+  <body class="bg-light">
+    <!-- ── Navbar ─────────────────────────────────────────── -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container py-1">
+        <!-- Brand -->
+        <a
+          class="navbar-brand d-flex align-items-center gap-2"
+          href="/"
+          aria-label="VidFind — GPU Finder Home"
+        >
+          <span class="logo-badge">GF</span>
+          <span>VidFind</span>
+        </a>
+
+        <!-- Refresh button -->
+        <div class="d-flex">
+          <button id="refreshBtn" aria-label="Refresh product data">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13"
+              height="13"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              style="margin-right: 5px; vertical-align: -1px"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"
+              />
+              <path
+                d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"
+              />
+            </svg>
+            Refresh Data
+          </button>
         </div>
+      </div>
     </nav>
 
+    <!-- ── Main Content ───────────────────────────────────── -->
     <main class="container my-4 my-md-5" role="main">
-        {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
     </main>
 
-    <footer class="py-4 mt-5 border-top bg-white">
-        <div class="container">
-            <p class="text-center text-muted mb-0 small">
-                &copy; 2025 GPU Finder. All rights reserved.
-            </p>
-        </div>
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="site-footer">
+      <div class="container">
+        <p class="mb-0">
+          &copy; 2025 <strong>VidFind</strong> &mdash; GPU price tracker. Data
+          sourced from multiple online retailers.
+        </p>
+      </div>
     </footer>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- App JS -->
     <script src="{{ url_for('static', filename='/js/app.js') }}"></script>
-</body>
+  </body>
 </html>
